@@ -1,17 +1,23 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import {FooModule} from './foo/foo.module';
+import {FooComponent} from './foo/foo.component';
+import {FooService} from './foo/foo.service';
+import {FooServiceMock} from './foo/foo.service.mock';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        FooModule,
       ],
       declarations: [
         AppComponent
       ],
-    }).compileComponents();
+    }).overrideComponent(FooComponent, {set: {providers: [{provide: FooService, useClass: FooServiceMock}]}})
+      .compileComponents();
   }));
 
   it('should create the app', () => {
